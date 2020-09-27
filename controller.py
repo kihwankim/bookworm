@@ -23,17 +23,18 @@ def main():
             if is_eng:
                 paragraph_list = translator.call_api(paragraph_list)
 
-            ptr_voice = announcer.call_api(paragraph_list)
+            ptr_voice = announcer.store_voice(paragraph_list)  # default en
 
-            success = view.print_voice(ptr_voice)
+            success = event_handler.print_voice(ptr_voice)
 
             if not success:
-                view.print_error()
+                event_handler.print_error()
 
         if cap_event:
             event_handler.handle_capture()
 
         time.sleep(1)
+
 
 if __name__ == '__main__':
     main()
