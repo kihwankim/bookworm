@@ -3,14 +3,14 @@ import sys
 import time
 from view import view
 from preprocessing import preprocessing
-from translate import translate
+from translator import translator
 from voice import voice
 
 
 def main():
     event_handler = view()
     prep = preprocessing()
-    translator = translate()
+    trans = translator()
     announcer = voice()
     while True:
         voc_event = event_handler.voice_flag
@@ -21,7 +21,7 @@ def main():
             paragraph_list, is_eng = prep.preprocess_img(cap_img)
 
             if is_eng:
-                paragraph_list = translator.call_api(paragraph_list)
+                paragraph_list = trans.translate(paragraph_list, 'ko')
 
             ptr_voice = announcer.store_voice(paragraph_list)  # default en
 
