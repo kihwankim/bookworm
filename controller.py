@@ -19,14 +19,18 @@ def main():
     trans = translator()
     announcer = voice()
     mode = 'kor'
-    button_init(event_handler) # start button thread
+    button_init(event_handler)  # start button thread
 
     while True:
         voc_event = event_handler.voice_flag
         cap_event = event_handler.capture_flag
+        ret_val, cam_img = event_handler.handle_capture()
+        event_handler.show_img(cam_img) # show image for testing
+
 
         if voc_event:
-            cap_img = event_handler.handle_voice()
+            # cap_img = event_handler.handle_voice()
+            cap_img = cam_img
             paragraph_list, is_eng = preprocess_img(cap_img, mode=mode)
 
             if is_eng:
@@ -38,6 +42,8 @@ def main():
 
             if not success:
                 event_handler.print_error()
+
+            event_handler.set_voice_flag = False
 
         if cap_event:
             event_handler.handle_capture()

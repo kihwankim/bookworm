@@ -11,7 +11,7 @@ class view(object):
         self.cam.set(4, 720)  # CV_CAP_PROP_FRAME_HEIGHT
 
     def handle_capture(self):
-        pass
+        return self.cam.read()
 
     def show_img(self, img):
         cv2.imshow('frame', img)
