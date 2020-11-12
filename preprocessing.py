@@ -7,7 +7,7 @@ MARGIN = 10
 
 
 def detect_text_area(img):
-    net = cv2.dnn.readNet("/home/eggbread/project/eggbread/bookworm/model/frozen_east_text_detection.pb")
+    net = cv2.dnn.readNet("./frozen_east_text_detection.pb")
     blob = cv2.dnn.blobFromImage(img, 1.0, (640, 1280), (123.68, 116.78, 103.94), True, False)
     net.setInput(blob)
     outputLayers = []
@@ -93,12 +93,13 @@ def check_language(extracted_text):
             k_cnt += 1
         elif ord('a') <= ord(s.lower()) <= ord('z'):
             e_cnt += 1
-    return k_cnt/(k_cnt + extracted_text), e_cnt/(k_cnt + extracted_text)
+    return k_cnt/(k_cnt + e_cnt), e_cnt/(k_cnt + e_cnt)
 
 
 def preprocess_img(img, mode):
     detected_img = detect_text_area(img)
     makeup_img = img_makeup(detected_img)
+    cv2.imwrite('./test.jpg', makeup_img)
     extracted_text = run_tesseract(makeup_img, mode)
     prob_k, prob_e = check_language(extracted_text)
     if prob_k > prob_e:
