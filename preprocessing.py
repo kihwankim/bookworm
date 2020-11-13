@@ -93,7 +93,10 @@ def check_language(extracted_text):
             k_cnt += 1
         elif ord('a') <= ord(s.lower()) <= ord('z'):
             e_cnt += 1
-    return k_cnt/(k_cnt + e_cnt), e_cnt/(k_cnt + e_cnt)
+
+    if (k_cnt + e_cnt) == 0:
+        return 0
+    return k_cnt / (k_cnt + e_cnt), e_cnt / (k_cnt + e_cnt)
 
 
 def preprocess_img(img, mode):
